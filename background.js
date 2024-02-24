@@ -27,3 +27,32 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         });
     }
 });
+
+
+let db;
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.video && request.dataURL) {
+        let openRequest = indexedDB.open(request.video, 1);
+        openRequest.onupgradeneeded = function () {
+            db = openRequest.result;
+            if (!db.objectStoreNames.contains(request.video)) {
+                db.createObjectStore(request.video, { autoIncrement: true });
+            }
+        }
+        openRequest.onsuccess = function () {
+            console.log("Database opened");
+            db = openRequest.result;
+            let transaction = db.transaction(request.video, 'readwrite');
+            let store = transaction.objectStore(request.video);
+            store.add(request.dataURL);
+            console.log("Data added to database");
+        }
+        openRequest.onerror = function (event) {
+            console.error("Error opening database", event.target.error);
+        }
+    } else {
+        console.error("Invalid message format", request);
+    }
+});
+

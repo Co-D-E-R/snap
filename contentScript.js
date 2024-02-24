@@ -1,6 +1,12 @@
 (() => {
+    
+
+
+
+
     let player, controls;
     let current_video = "";
+    let dataURL = "";
 
     //when message is received from background.js
     chrome.runtime.onMessage.addListener((obj, sender, response) => {
@@ -33,6 +39,14 @@
 
 
 
+            } else if (current_video.includes("primevideo.com")) {
+                if (!document.querySelector(".prime-snap-btn")) {
+                    snapBtn.className = "prime-snap-btn";
+                    controls = document.getElementsByClassName("player-overlay")[0];
+                    player = document.getElementsByTagName("video")[0];
+                    controls.appendChild(snapBtn);
+                    snapBtn.addEventListener("click", addSnapHandler);
+                }
             } else {
                 // console.log("not youtube");
                 snapBtn.className = "snap-btn";
@@ -50,7 +64,7 @@
                     })
                 }
                 waitForVideoLoad().then(player => {
-                    // console.log(player);
+                    console.log(player);
                     let parent = player.parentNode;
                     snapBtn.style.position = "absolute";
                     snapBtn.style.top = "0";
@@ -66,23 +80,50 @@
         }
     }
 
-    //when snap button is clicked
+
+
+
     const addSnapHandler = () => {
         console.log("Snap button clicked");
         let canvas = document.createElement("canvas");
         canvas.width = player.videoWidth;
         canvas.height = player.videoHeight;
         let ctx = canvas.getContext("2d");
-        ctx.drawImage(player,0,0,canvas.width,canvas.height);
-        let dataURL = canvas.toDataURL();
-        let a = document.createElement("a");
-        a.href = dataURL;
-        a.download = "screenshot.png";
-        a.click();
-        a.remove();
-        canvas.remove();
+        ctx.drawImage(player, 0, 0, canvas.width, canvas.height);
+        dataURL = canvas.toDataURL();
+        if (dataURL) {
+            // console.log("Data URL: ", dataURL);
+            chrome.runtime.sendMessage({dataURL: dataURL, video: current_video});
+        }
+
+
+        // if (dataURL) {
+        //     console.log("Data URL: ", dataURL);
+        //     let openRequest = indexedDB.open(`${current_video}`, 1);
+        //     openRequest.onupgradeneeded = function () {
+        //         db = openRequest.result;
+        //         if (!db.objectStoreNames.contains(`${current_video}`)) {
+        //             db.createObjectStore(`${current_video}`, { autoIncrement: true });
+        //         }
+        //     }
+        //     openRequest.onsuccess = function () {
+        //         console.log("Database opened");
+        //         db = openRequest.result;
+        //         let transaction = db.transaction(`${current_video}`, 'readwrite');
+        //         let store = transaction.objectStore(`${current_video}`);
+        //         store.add(dataURL);
+        //         console.log("Database opened");
+        //     }
+        //     openRequest.onerror = function () {
+        //         console.error("Error opening database");
+        //     }
+        // }
 
     }
+    
+
+
+
 
 
 })();

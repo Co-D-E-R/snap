@@ -6,5 +6,16 @@
     <div class="title">Your bookmarks for this video</div>
 
     <div class="bookmarks" id="bookmarks"></div>
+    <script src="https://unpkg.com/localbase/dist/localbase.dev.js"></script>
+
+    <script>
+      let db = new Localbase('db')
+
+      db.collection("https://www.youtube.com/watch?v=GGi7Brsf7js").get().then(users => {
+        console.log(users);
+      })
+    </script>
+
+
   </div>
 </div>
