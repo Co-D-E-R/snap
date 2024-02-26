@@ -1,8 +1,4 @@
 (() => {
-    
-
-
-
 
     let player, controls;
     let current_video = "";
@@ -25,7 +21,8 @@
         const buttonExit = document.getElementsByClassName("bookmark-btn")[0];
         if (!buttonExit) {
             const snapBtn = document.createElement("img");
-            snapBtn.src = chrome.runtime.getURL("icons/snap.png");
+            snapBtn.src = chrome.runtime.getURL("./icons/snap.png");
+            console.log(chrome.runtime.getURL("./icons/snap.png"));
             snapBtn.title = "ScreenShot";
             if (current_video.includes("youtube.com")) {
                 if (!document.querySelector(".ytb-snap-btn")) {
@@ -84,6 +81,13 @@
 
 
     const addSnapHandler = () => {
+        let port = chrome.runtime.connect({ name: "my-connection" });
+
+        port.onDisconnect.addListener(function () {
+            // Handle disconnect here
+            console.log("Disconnected");
+            port = null;
+        });
         console.log("Snap button clicked");
         let canvas = document.createElement("canvas");
         canvas.width = player.videoWidth;
@@ -91,9 +95,10 @@
         let ctx = canvas.getContext("2d");
         ctx.drawImage(player, 0, 0, canvas.width, canvas.height);
         dataURL = canvas.toDataURL();
-        if (dataURL) {
+        console.log("Data URL: ", dataURL);
+        if (dataURL && port) {
             // console.log("Data URL: ", dataURL);
-            chrome.runtime.sendMessage({dataURL: dataURL, video: current_video});
+            chrome.runtime.sendMessage({ dataURL: dataURL, video: current_video });
         }
 
 
@@ -120,7 +125,7 @@
         // }
 
     }
-    
+
 
 
 

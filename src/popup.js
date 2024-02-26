@@ -1,4 +1,8 @@
 // adding a new bookmark row to the popup
+import Localbase from "localbase";
+let db = new Localbase('ScreenshotDB');
+
+
 const addNewBookmark = () => {};
 
 const viewBookmarks = () => {};

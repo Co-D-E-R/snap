@@ -1,0 +1,64 @@
+{
+    "name": " Try Snapshort",
+    "version": "0.1.0",
+    "description": "Saving screenshots of web pages",
+ 
+   
+   
+    "permissions": [
+      "storage",
+      "tabs",
+      "downloads",
+      "activeTab",
+      "scripting"
+    ],
+    "host_permissions": [
+      "\u003Call_urls>",
+      "*://*/*"
+    ],
+    "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/snap.png",
+      "48": "icons/icon48.png",
+      "256": "icons/snap2.png"
+    },
+    "background": {
+      "service_worker": "ServiceWorker.bundle.js"
+    },
+    "content_scripts": [
+      {
+        "all_frames": true,
+        "match_about_blank": true,
+        "matches": [
+          "\u003Call_urls>"
+        ],
+        "js": [
+          "contentScript.bundle.js"
+        ],
+        "run_at": "document_end"
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "icons/icon128.png",
+          "icons/snap.png",
+          "icons/icon48.png",
+          "icons/snap2.png"
+        ],
+        "matches": [
+          "\u003Call_urls>"
+        ]
+      }
+    ],
+    "action": {
+      "default_icon": {
+        "16": "./icons/ext-icon.png",
+        "24": "./icons/ext-icon.png",
+        "32": "./icons/ext-icon.png"
+      },
+      "default_title": "Snapshort",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+  }
