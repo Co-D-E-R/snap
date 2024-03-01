@@ -4,7 +4,7 @@ module.exports = {
     entry: {
         ServiceWorker: './src/background.js',
         contentScript: './src/contentScript.js',
-        popup: './src/popup.js'
+        popup: './src/popup.bundle.js'
     },
     output: {
         filename: '[name].bundle.js',

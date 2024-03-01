@@ -2,6 +2,11 @@
     width: 280px;
     color: #314d3e;
   }
+
+  .img{
+    width: 100px;
+    height: 100px;
+  }
   
   .title {
     font-size: 14px;
@@ -37,6 +42,7 @@
     margin-bottom: 7px;
   }
   
+  
   .bookmark-title {
     padding-left: 2px;
   }
@@ -52,3 +58,4 @@
     flex: auto;
     text-align: right;
   }
+

@@ -88,6 +88,10 @@
             console.log("Disconnected");
             port = null;
         });
+        if (!port) {
+            port = chrome.runtime.connect({ name: "my-connection" });
+        }
+
         console.log("Snap button clicked");
         let canvas = document.createElement("canvas");
         canvas.width = player.videoWidth;
