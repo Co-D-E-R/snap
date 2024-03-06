@@ -20,7 +20,8 @@
       "128": "icons/icon128.png",
       "16": "icons/snap.png",
       "48": "icons/icon48.png",
-      "256": "icons/snap2.png"
+      "256": "icons/snap2.png",
+      "32": "icons/download.png"
     },
     "background": {
       "service_worker": "ServiceWorker.bundle.js"
@@ -44,7 +45,10 @@
           "icons/icon128.png",
           "icons/snap.png",
           "icons/icon48.png",
-          "icons/snap2.png"
+          "icons/snap2.png",
+          "icons/download.png",
+          "icons/delete.png",
+          "icons/setting.png"
         ],
         "matches": [
           "\u003Call_urls>"

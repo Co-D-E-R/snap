@@ -9,14 +9,45 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
-      
+
     },
     mode: 'development',
     watch: true,
     devtool: 'inline-source-map',
     plugins: [
         new copyWebpackPlugin({
-            patterns:[{from:'static'}]
+            patterns: [{ from: 'static' }]
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.png$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            outputPath: 'images',
+                        },
+                    },
+                ],
+            },
+            {
+            
+            test: /\.css$/,
+            // include: path.resolve(__dirname, 'src'),
+            use: [
+                'style-loader',
+                { loader: 'css-loader', options: { importLoaders: 1 } },
+                'postcss-loader'
+            ],
+          },
+        ],
+
+},
+    devServer: {
+    watchContentBase: true,
+        contentBase: path.join(__dirname, 'dist'),
+            open: true,
+      },
 };

@@ -10,7 +10,10 @@
 
         if (type === "NEW_VIDEO") {
             current_video = video_url;
-            newVideoLoaded();
+        
+                newVideoLoaded();
+            
+            
         }
 
     })
@@ -81,7 +84,13 @@
 
 
     const addSnapHandler = () => {
-        let port = chrome.runtime.connect({ name: "my-connection" });
+        let port;
+        try {
+            port = chrome.runtime.connect({ name: "my-connection" });
+        } catch (error) {
+            console.error("Error connecting to port:", error);
+            return;
+        }
 
         port.onDisconnect.addListener(function () {
             // Handle disconnect here
@@ -89,7 +98,12 @@
             port = null;
         });
         if (!port) {
-            port = chrome.runtime.connect({ name: "my-connection" });
+            try {
+                port = chrome.runtime.connect({ name: "my-connection" });
+            } catch (error) {
+                console.error("Error reconnecting to port:", error);
+                return;
+            }
         }
 
         console.log("Snap button clicked");
@@ -102,31 +116,13 @@
         console.log("Data URL: ", dataURL);
         if (dataURL && port) {
             // console.log("Data URL: ", dataURL);
-            chrome.runtime.sendMessage({ dataURL: dataURL, video: current_video });
+            // chrome.runtime.sendMessage({ dataURL: dataURL, video: current_video });
+            try {
+                chrome.runtime.sendMessage({ dataURL: dataURL, video: current_video });
+            } catch (error) {
+                console.error("Error sending message:", error);
+            }
         }
-
-
-        // if (dataURL) {
-        //     console.log("Data URL: ", dataURL);
-        //     let openRequest = indexedDB.open(`${current_video}`, 1);
-        //     openRequest.onupgradeneeded = function () {
-        //         db = openRequest.result;
-        //         if (!db.objectStoreNames.contains(`${current_video}`)) {
-        //             db.createObjectStore(`${current_video}`, { autoIncrement: true });
-        //         }
-        //     }
-        //     openRequest.onsuccess = function () {
-        //         console.log("Database opened");
-        //         db = openRequest.result;
-        //         let transaction = db.transaction(`${current_video}`, 'readwrite');
-        //         let store = transaction.objectStore(`${current_video}`);
-        //         store.add(dataURL);
-        //         console.log("Database opened");
-        //     }
-        //     openRequest.onerror = function () {
-        //         console.error("Error opening database");
-        //     }
-        // }
 
     }
 

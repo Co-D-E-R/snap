@@ -2,6 +2,7 @@ import Localbase from "localbase";
 import { Buffer } from "buffer";
 import { v4 as uuidv4 } from 'uuid';
 
+
 let db = new Localbase('ScreenshotDB');
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
@@ -47,26 +48,28 @@ function dataURLToImg(dataURL) {
 
 
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.video && request.dataURL) {
-        const { video, dataURL } = request;
-        const trim_url = video.split('&')[0];
-        console.log(trim_url);
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        if (request.video && request.dataURL) {
+            const { video, dataURL } = request;
+            const trim_url = video.split('&')[0];
+            console.log(trim_url);
 
-      
-    
-        const image = dataURLToImg(dataURL);
 
-        db.collection(`${trim_url}`).add({
-            id: uuidv4(),
-            img : image 
-        }).then(() => {
-            console.log('Image added to database');
-        });
-        
-    }else{
-        console.log('No video found');
-    }
-        
-});
 
+            const image = dataURLToImg(dataURL);
+
+            db.collection(`${trim_url}`).add({
+                id: uuidv4(),
+                img: image
+            }).then(() => {
+                console.log('Image added to database');
+            });
+
+        } else {
+            console.log('No video found');
+        }
+
+    });
+
+
+//Delete images from database
