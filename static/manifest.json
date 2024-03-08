@@ -1,7 +1,7 @@
 {
-    "name": " Try Snapshort",
+    "name": "ScreenShot Snap",
     "version": "0.1.0",
-    "description": "Saving screenshots of web pages",
+    "description": "Capture a ScreenShot of a video and Convert it to Pdf or download it as Image",
  
    
    
@@ -57,9 +57,9 @@
     ],
     "action": {
       "default_icon": {
-        "16": "./icons/ext-icon.png",
-        "24": "./icons/ext-icon.png",
-        "32": "./icons/ext-icon.png"
+        "16": "./icons/snap2.png",
+        "24": "./icons/snap2.png",
+        "32": "./icons/snap2.png"
       },
       "default_title": "Snapshort",
       "default_popup": "popup.html"

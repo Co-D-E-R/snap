@@ -3,6 +3,7 @@
     let player, controls;
     let current_video = "";
     let dataURL = "";
+   
 
     //when message is received from background.js
     chrome.runtime.onMessage.addListener((obj, sender, response) => {
@@ -10,29 +11,32 @@
 
         if (type === "NEW_VIDEO") {
             current_video = video_url;
-        
-                newVideoLoaded();
-            
-            
+            newVideoLoaded();
+
         }
 
     })
 
     //when video get loaded
 
-    const newVideoLoaded = () => {
+    const newVideoLoaded = async() => {
+     
         const buttonExit = document.getElementsByClassName("bookmark-btn")[0];
         if (!buttonExit) {
             const snapBtn = document.createElement("img");
             snapBtn.src = chrome.runtime.getURL("./icons/snap.png");
-            console.log(chrome.runtime.getURL("./icons/snap.png"));
+            snapBtn.style.width = "40px";
+            snapBtn.style.height = "40px";
+
+
+
             snapBtn.title = "ScreenShot";
             if (current_video.includes("youtube.com")) {
                 if (!document.querySelector(".ytb-snap-btn")) {
                     snapBtn.className = "ytb-snap-btn";
                     controls = document.getElementsByClassName("ytp-left-controls")[0];
                     player = document.getElementsByClassName("video-stream")[0];
-                    controls.appendChild(snapBtn);
+                    controls?.appendChild(snapBtn);
                     snapBtn.addEventListener("click", addSnapHandler);
                 }
 
@@ -80,7 +84,7 @@
         }
     }
 
-
+    
 
 
     const addSnapHandler = () => {
@@ -94,7 +98,7 @@
 
         port.onDisconnect.addListener(function () {
             // Handle disconnect here
-            console.log("Disconnected");
+            // console.log("Disconnected");
             port = null;
         });
         if (!port) {
@@ -106,17 +110,15 @@
             }
         }
 
-        console.log("Snap button clicked");
+        // console.log("Snap button clicked");
         let canvas = document.createElement("canvas");
         canvas.width = player.videoWidth;
         canvas.height = player.videoHeight;
         let ctx = canvas.getContext("2d");
         ctx.drawImage(player, 0, 0, canvas.width, canvas.height);
         dataURL = canvas.toDataURL();
-        console.log("Data URL: ", dataURL);
+      
         if (dataURL && port) {
-            // console.log("Data URL: ", dataURL);
-            // chrome.runtime.sendMessage({ dataURL: dataURL, video: current_video });
             try {
                 chrome.runtime.sendMessage({ dataURL: dataURL, video: current_video });
             } catch (error) {
@@ -126,6 +128,26 @@
 
     }
 
+  
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const targetNode = document.querySelector('video');
+        if (!targetNode) {
+            console.error('No video element found');
+            return;
+        }
+    
+        const config = { attributes: true, childList: true, subtree: true };
+        const callback = function(mutationsList, observer) {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    newVideoLoaded();
+                }
+            }
+        };
+    
+        const observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+    });
 
 
 

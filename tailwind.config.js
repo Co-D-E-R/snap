@@ -9,7 +9,6 @@ module.exports = {
     './static/**/*.html',
     './static/**/*.css'
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
   },
