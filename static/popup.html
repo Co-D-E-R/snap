@@ -5,26 +5,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="popup.css" rel="stylesheet" type="text/css" />
-  <title>Document</title>
+  <title>ScreenShot</title>
 </head>
 
 <body class="Container font-mono">
   <div class="mb-5 ">
     <div>
       <div class="top grid relative text-2xl text-center mb-2 p-3 ">
-        <div class=" text-white font-bold font-mono tracking-wide  justify-self-center text-shadow rounded-2xl w-1/2  bg-green-700 "> <span>Snap</span>shot</div>
-       
+        <div
+          class=" text-white font-bold font-mono tracking-wide  justify-self-center text-shadow rounded-2xl w-1/2  bg-green-700 ">
+          <span>Snap</span>shot</div>
+
         <div class="setting relative  flex w-6 h-6">
-          <img class="hover:cursor-pointer transform transition duration-500 hover:rotate-180" id="setting" src="./icons/setting.png" alt="setting">
+          <img class="hover:cursor-pointer transform transition duration-500 hover:rotate-180" id="setting"
+            src="./icons/setting.png" alt="setting">
           <div id="optionBar" class=" hidden absolute top-0 right-6 bg-green-700 p-1 hover:bg-green-800 rounded shadow">
             <button class="block px-1 text-white text-sm  font-bold text-nowrap" id="dbBtn">
               Delete DB
             </button>
 
           </div>
+        </div>
       </div>
-      </div>
-     
+
       <div
         class="imgContainer flex flex-row flex-wrap bg-slate-100  border border-spacing-2 p-1 max-h-80  overflow-auto scrollbar scrollbar-thumb-green-700">
         <!-- <div class="imgContainer">
@@ -36,26 +39,27 @@
 
     </div>
 
-    
+
 
 
   </div>
   </div class="">
-  <div class="ButtonContainer flex flex-row fixed bottom-0 w-full mt-2 ">
-    <button class="text-white font-bold bg-green-700 hover:bg-green-800 h-8 w-full text-lg transition ease-in duration-200" id="download">Zip-Download</button>
-    <button class="text-white font-bold bg-green-700 hover:bg-green-800 h-8 w-full text-lg transition ease-in duration-200" id="pdf">Pdf-Download</button>
+  <div class="ButtonContainer flex flex-row fixed bottom-0 w-full mt-2 bg-green-700">
+    <div id="loader" class=" w-0 h-8 bg-green-900 font-bold text-white text-lg justify-center"></div>
+      <button
+        class="text-white font-bold bg-green-700 hover:bg-green-800 h-8 w-full text-lg transition ease-in duration-200"
+        id="download">Zip-Download</button>
+      <button
+        class="text-white font-bold bg-green-700 hover:bg-green-800 h-8 w-full text-lg transition ease-in duration-200"
+        id="pdf">Pdf-Download</button>
+    
   </div>
 
 
 
   </div>
   </div>
-
-
   <script type="module" src="popup.bundle.js"></script>
 </body>
 
 </html>
-
-
-

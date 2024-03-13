@@ -4,7 +4,8 @@ module.exports = {
     entry: {
         ServiceWorker: './src/background.js',
         contentScript: './src/contentScript.js',
-        popup: './src/popup.bundle.js'
+        popup: './src/popup.bundle.js',
+
     },
     output: {
         filename: '[name].bundle.js',
@@ -15,6 +16,17 @@ module.exports = {
     watch: true,
     devtool: 'inline-source-map',
     plugins: [
+        
+        new copyWebpackPlugin({
+            patterns: [
+              { from: 'src/jspdf.umd.min.js', to: 'jspdf.umd.min.js' },
+              {
+                from: 'src/pdfobject.min.js',
+                to: 'pdfobject.min.js'
+              }
+            ],
+          }),
+
         new copyWebpackPlugin({
             patterns: [{ from: 'static' }]
         })

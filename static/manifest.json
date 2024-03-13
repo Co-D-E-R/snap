@@ -1,6 +1,6 @@
 {
     "name": "ScreenShot Snap",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Capture a ScreenShot of a video and Convert it to Pdf or download it as Image",
  
    
@@ -22,7 +22,7 @@
       "32": "icons/download.png"
     },
     "background": {
-      "service_worker": "ServiceWorker.bundle.js"
+      "service_worker":"ServiceWorker.bundle.js"
     },
     "content_scripts": [
       {
@@ -32,7 +32,10 @@
           "\u003Call_urls>"
         ],
         "js": [
-          "contentScript.bundle.js"
+          "jspdf.umd.min.js",
+          "contentScript.bundle.js",
+          "pdfobject.min.js"
+          
         ],
         "run_at": "document_end"
       }
